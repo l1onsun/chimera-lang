@@ -1,0 +1,35 @@
+lsp.Server
+ .add_handler {
+    event = lsp.events.DOCUMENT_DID_CHANGE
+    handler =
+      fn(params: lsp.DocumentDidChangeParams).do .. effects {
+          tree.apply_and_rebuild(params)
+          if (tree.get(params.position)) {
+              ; do_something
+              ; some work
+          }
+      }
+}
+ .add_handler {
+    event = lsp.events.DOCUMENT_COMPLETION
+    trigger = "."
+    handler = fn(params: lsp.DocumentDidChangeParams).do .. effects {
+        tree.apply_and_rebuild(params)
+    }
+}
+ .add_handler {
+    event = lsp.events.DOCUMENT_COMPLETION
+    trigger = "."
+    handler = fn(params: lsp.DocumentDidChangeParams).do .. effects {
+        tree.apply_and_rebuild(params)
+    }
+}
+ .run >> Effect
+
+@$lib.link [
+    lsp = $lib.import("lsp")
+    if = $lib.control.if
+    tree = $tree: $lib.import("./tree.wt").SourceTree
+]
+
+

@@ -1,0 +1,27 @@
+[[language]]
+name = "walktime"
+scope = "source.walktime"
+injection-regex = "walktime"
+file-types = ["wl", "walktime", "wt", "ch", "chi", "walklang", "chimera", "walk"]
+language-servers = ["mywalklsp"] # , "ruff", "pylyzer", "tabby", "pylsp"]
+comment-token = ";"
+indent = { tab-width = 2, unit = "  " }
+
+[[grammar]]
+name = "walktime"
+source = { git = "https://github.com/tree-sitter/tree-sitter-chimera", rev = "fca66ee0ea76ae697706761129362f806b7ce22d" }
+
+[language-server.mywalklsp]
+command = "python"
+args = ["lsp"]
+
+# [[grammar]]
+# name = "walktime"
+# source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "1f63b33efee17e833e0ea29266dd3d713e27e321" }
+# formatter.command = "sh"
+# formatter.args = [
+#   "-c",
+#   "black --quiet - | isort --profile black -",
+# ]
+
+
