@@ -1,17 +1,17 @@
 [[language]]
-name = "walktime"
-scope = "source.walktime"
-injection-regex = "walktime"
-file-types = ["wl", "walktime", "wt", "ch", "chi", "walklang", "chimera", "walk"]
-language-servers = ["mywalklsp"] # , "ruff", "pylyzer", "tabby", "pylsp"]
+name = "chimera"
+scope = "source.chimera"
+injection-regex = "chimera"
+file-types = ["chi"]
+language-servers = ["mychimeralsp"]
 comment-token = ";"
-indent = { tab-width = 2, unit = "  " }
+indent = { tab-width = 3, unit = "   " }
 
 [[grammar]]
-name = "walktime"
-source = { git = "https://github.com/tree-sitter/tree-sitter-chimera", rev = "fca66ee0ea76ae697706761129362f806b7ce22d" }
+name = "chimera"
+source = { git = "https://github.com/l1onsun/tree-sitter-chimera", rev = "fca66ee0ea76ae697706761129362f806b7ce22d" }
 
-[language-server.mywalklsp]
+[language-server.mychimeralsp]
 command = "python"
 args = ["lsp"]
 

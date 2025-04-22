@@ -10,6 +10,7 @@
     let
       forSystem = inputs.nixpkgs.lib.genAttrs [
         "x86_64-linux"
+        "aarch64-linux"
       ];
       pkgsFor = forSystem (system: import inputs.nixpkgs { inherit system; });
     in
