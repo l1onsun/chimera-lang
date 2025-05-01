@@ -9,11 +9,11 @@ indent = { tab-width = 3, unit = "   " }
 
 [[grammar]]
 name = "chimera"
-source = { git = "https://github.com/l1onsun/tree-sitter-chimera", rev = "fca66ee0ea76ae697706761129362f806b7ce22d" }
+source = { git = "https://github.com/l1onsun/tree-sitter-chimera", rev = "0061a67d6539629cc3af33b77abc947ba723911b" }
 
 [language-server.mychimeralsp]
 command = "python"
-args = ["lsp"]
+args = ["-m", "lsp"]
 
 # [[grammar]]
 # name = "walktime"

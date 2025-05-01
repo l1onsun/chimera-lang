@@ -1,0 +1,8 @@
+lib.map {
+   lsp_server = lsp.Server
+      .add_handler {
+         event.
+      }
+   lsp = lib.import(lsp)
+}
+
