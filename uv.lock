@@ -35,7 +35,6 @@ dependencies = [
     { name = "pygls" },
     { name = "sortedcontainers" },
     { name = "tree-sitter" },
-    { name = "tree-sitter-walktime" },
 ]
 
 [package.metadata]
@@ -44,7 +43,6 @@ requires-dist = [
     { name = "pygls", specifier = ">=2.0.0a2" },
     { name = "sortedcontainers", specifier = ">=2.4.0" },
     { name = "tree-sitter", specifier = ">=0.24.0" },
-    { name = "tree-sitter-walktime", editable = "tree-sitter-walktime" },
 ]
 
 [[package]]
@@ -121,12 +119,3 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/a1/b4/6b0291a590c2b0417cfdb64ccb8ea242f270a46ed429c641fbc2bfab77e0/tree_sitter-0.24.0-cp313-cp313-win_amd64.whl", hash = "sha256:f58bb4956917715ec4d5a28681829a8dad5c342cafd4aea269f9132a83ca9b34", size = 120207 },
     { url = "https://files.pythonhosted.org/packages/a8/18/542fd844b75272630229c9939b03f7db232c71a9d82aadc59c596319ea6a/tree_sitter-0.24.0-cp313-cp313-win_arm64.whl", hash = "sha256:23641bd25dcd4bb0b6fa91b8fb3f46cc9f1c9f475efe4d536d3f1f688d1b84c8", size = 108232 },
 ]
-
-[[package]]
-name = "tree-sitter-walktime"
-version = "0.1.0"
-source = { editable = "tree-sitter-walktime" }
-
-[package.metadata]
-requires-dist = [{ name = "tree-sitter", marker = "extra == 'core'", specifier = "~=0.24" }]
-provides-extras = ["core"]

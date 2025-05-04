@@ -9,8 +9,4 @@ dependencies = [
     "pygls>=2.0.0a2",
     "sortedcontainers>=2.4.0",
     "tree-sitter>=0.24.0",
-    "tree-sitter-walktime",
 ]
-
-[tool.uv.sources]
-tree-sitter-walktime = { path = "tree-sitter-walktime", editable = true }
