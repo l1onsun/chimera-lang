@@ -1,0 +1,25 @@
+; lsp_start
+$lsp_start |@ctx.map {
+   lsp_start = $lsp.start {
+      @on.INITIALIZE: initilaze($state)(@params)
+      @on.GOTO_DEFINITION: goto_definition($state)(@params)
+      @on.INITIALIZE: initilaze($state)
+   }
+   state = #ctx.map {
+      ...
+   }
+   @ctx.import."lsp.chi"
+}
+
+
+; main.xi
+@ctx.map {
+   @ctx.import."lsp_init.chi": [@lsp_start]
+   @ctx.import.std: [@eff]
+   main = eff {
+      $lsp_start: @runtime.args: @runtime.env
+      @runtime.sysexit(0)
+   }
+}
+; Допустим подход, что @variable и ($)variable подставляются сразу
+; какие проблемы?

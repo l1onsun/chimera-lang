@@ -26,7 +26,8 @@
             venvDir = ".venv";
             UV_PRERELEASE = "allow";
             packages = [
-            # buildInputs = [
+              pkgs.clang
+              pkgs.git-subrepo
               pkgs.just
               pkgs.uv
               pkgs.python313

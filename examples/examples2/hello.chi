@@ -1,0 +1,4 @@
+@lib: $lib.map [
+   lsp_server = $LspServer.new()
+   LspServer = $lib.import(./lsp)
+]  ; this is comment

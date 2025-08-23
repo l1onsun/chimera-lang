@@ -1,7 +1,13 @@
 import logging
 
+from tree_sitter import Range
+from lsp.parser import parser
+from typing import cast
+
 from lsprotocol import types
 from pygls.lsp.server import LanguageServer
+
+from lsp.ctx import VALUE_OBJ, ChiContext, ChiError, ChiDataObject
 
 logging.basicConfig(filename="pygls.log", filemode="w", level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -9,50 +15,60 @@ logger.info("Starting LSP 1")
 
 server = LanguageServer("example-server", "v0.1")
 
+@server.feature(types.TEXT_DOCUMENT_DID_OPEN)
+def document_did_open(ls: LanguageServer, params: types.DidChangeTextDocumentParams):
+    logger.info(f"get did open {params.text_document.uri}")
+    update(ls, params.text_document.uri)
 
 @server.feature(types.TEXT_DOCUMENT_DID_CHANGE)
 def did_change(ls: LanguageServer, params: types.DidChangeTextDocumentParams):
-    logger.info(f"get did change {params}")
-    logger.info(f"type did change {type(params)}")
-    if params.content_changes:
-        first_content_change = params.content_changes[0]
-        if isinstance(first_content_change, types.TextDocumentContentChangePartial):
-            diagnostics_end = first_content_change.range.start
-        else:
-            diagnostics_end = types.Position(line=0, character=3)
+    logger.info(f"get did change {params.text_document.uri}")
+    update(ls, params.text_document.uri)
 
-        ls.text_document_publish_diagnostics(
-            types.PublishDiagnosticsParams(
-                uri=params.text_document.uri,
-                diagnostics=[
-                    types.Diagnostic(
-                        message="Testing Diag",
-                        severity=types.DiagnosticSeverity.Error,
-                        range=types.Range(
-                            start=types.Position(line=0, character=0),
-                            end=diagnostics_end,
-                        ),
-                    )
-                ],
-            )
+def update(ls: LanguageServer, uri: str):
+    document = ls.workspace.get_text_document(uri)
+    tree = parser.parse(document.source.encode())
+    ctx = ChiContext(tree)
+    obj = ctx.evualate_tree(tree.root_node)
+    if obj.is_error():
+        error = cast(ChiError, obj)
+        diag = types.Diagnostic(
+            message=error.message,
+            severity=types.DiagnosticSeverity.Error,
+            range=convert_range(error.range),
         )
+    else:
+        value = obj.chi_call(VALUE_OBJ)
+        if value.is_error():
+            diag = types.Diagnostic(
+                message="Value has no value",
+                severity=types.DiagnosticSeverity.Warning,
+                range=convert_range(tree.root_node.range),
+            )
+        else:
+            value = cast(ChiDataObject, value)
+            diag = types.Diagnostic(
+                message=f"Success !!!: {value.chi_data}",
+                severity=types.DiagnosticSeverity.Hint,
+                range=convert_range(tree.root_node.range),
+            )
+    ls.text_document_publish_diagnostics(
+        types.PublishDiagnosticsParams(
+            uri=document.uri,
+            diagnostics=[diag],
+        )
+    )
 
 
-@server.feature(
-    types.TEXT_DOCUMENT_COMPLETION,
-    types.CompletionOptions(trigger_characters=["."]),
-)
-def completions(params: types.CompletionParams):
-    document = server.workspace.get_text_document(params.text_document.uri)
-    current_line = document.lines[params.position.line].strip()
-
-    if not current_line.endswith("hello."):
-        return []
-
-    return [
-        types.CompletionItem(label="world"),
-        types.CompletionItem(label="friends"),
-    ]
+def convert_range(_range: Range) -> types.Range:
+    return types.Range(
+        start=types.Position(
+            line=_range.start_point.row, character=_range.start_point.column
+        ),
+        end=types.Position(
+            line=_range.end_point.row, character=_range.end_point.column
+        ),
+    )
 
 
 if __name__ == "__main__":

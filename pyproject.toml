@@ -5,8 +5,17 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
-    "llvmlite>=0.44.0",
+    # "ctypesgen>=1.1.1",
+    # "clang<20",
+    # "ctypeslib2>=2.4.0",
+    # "llvmlite>=0.44.0",
+    "llvmlite<0.45.0",
+    # "pybinaryen>=1.122",
+    # "pybinaryen @ file://./binaryen-interfaces/pybinaryen",
     "pygls>=2.0.0a2",
     "sortedcontainers>=2.4.0",
     "tree-sitter>=0.24.0",
+    "wasmtime>=35.0.0",
+    "tree-sitter-chimera @ git+https://github.com/l1onsun/tree-sitter-chimera@f5da2e9e729ff1813a0ca77baa93df6e3f89c1f4",
+    # "cffi>=2.0.0b1",
 ]

@@ -9,7 +9,7 @@ indent = { tab-width = 3, unit = "   " }
 
 [[grammar]]
 name = "chimera"
-source = { git = "https://github.com/l1onsun/tree-sitter-chimera", rev = "0061a67d6539629cc3af33b77abc947ba723911b" }
+source = { git = "https://github.com/l1onsun/tree-sitter-chimera", rev = "f5da2e9e729ff1813a0ca77baa93df6e3f89c1f4" }
 
 [language-server.mychimeralsp]
 command = "python"

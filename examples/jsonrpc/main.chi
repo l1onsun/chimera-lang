@@ -1,0 +1,12 @@
+@ctx.map {
+   main = @ctx.eff: {
+      @rt.while {
+         line = getline(@rt.stdin).or { @rt.exit(1) }
+         response = handle_request(line)
+         response.unwrap(x) {rt.stdout.write(x)}
+      }.do {
+         
+      }
+   }
+   @ctx.import."handle_request.chi": handle_request
+}

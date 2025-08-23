@@ -1,8 +1,8 @@
-lib.map {
+@module {
    lsp_server = lsp.Server
       .add_handler {
          event.
       }
    lsp = lib.import(lsp)
-}
-
+} @map
+(lib = @lib, ). 
