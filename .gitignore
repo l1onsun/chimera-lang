@@ -12,3 +12,4 @@ wheels/
 
 # Logs
 pygls.log
+.aider*

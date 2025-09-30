@@ -25,6 +25,7 @@
           default = pkgs.mkShell {
             venvDir = ".venv";
             UV_PRERELEASE = "allow";
+            BINARYEN_HEADER_PATH = "${pkgs.binaryen}/include";
             packages = [
               pkgs.clang
               pkgs.git-subrepo
@@ -32,6 +33,7 @@
               pkgs.uv
               pkgs.python313
               pkgs.python313Packages.venvShellHook
+              pkgs.binaryen
             ];
           };
         }
