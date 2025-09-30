@@ -2,7 +2,7 @@
   description = "A very basic flake";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-25.05";
   };
 
   outputs =
@@ -25,7 +25,8 @@
           default = pkgs.mkShell {
             venvDir = ".venv";
             UV_PRERELEASE = "allow";
-            BINARYEN_HEADER_PATH = "${pkgs.binaryen}/include";
+            BINARYEN_HEADER_PATH = "${pkgs.binaryen}/include/binaryen-c.h";
+            LD_LIBRARY_PATH="${pkgs.binaryen}/lib";
             packages = [
               pkgs.clang
               pkgs.git-subrepo
@@ -35,6 +36,9 @@
               pkgs.python313Packages.venvShellHook
               pkgs.binaryen
             ];
+            # shellHook = ''
+            #     export LD_LIBRARY_PATH="${pkgs.binaryen}/lib:$LD_LIBRARY_PATH"
+            #   '';
           };
         }
       );
